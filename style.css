@@ -1,0 +1,33 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
+    padding: 20px;
+}
+
+.container {
+    max-width: 800px;
+    margin: auto;
+    background: #fff;
+    padding: 20px;
+    border-radius: 8px;
+}
+
+input {
+    padding: 10px;
+    margin: 5px;
+    width: 200px;
+}
+
+button {
+    padding: 10px 15px;
+    margin: 5px;
+    cursor: pointer;
+}
+
+.playlist {
+    border: 1px solid #ddd;
+    margin-top: 20px;
+    padding: 15px;
+    border-radius: 6px;
+    background: #f9f9f9;
+}

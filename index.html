@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Musik Spellistor</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Musik Spellistor</h1>
+        <div class="form">
+            <input type="text" id="playlist-name" placeholder="Namn på spellista">
+            <input type="text" id="genre" placeholder="Genre">
+            <input type="text" id="artist" placeholder="Artist">
+            <button onclick="createPlayList()">Skapa Spellista</button>
+        </div>
+
+        <div id="playlist-container">
+            <h2>Spellistor</h2>
+            <!-- Spellistor visas här -->
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
