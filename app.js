@@ -18,7 +18,7 @@ function createPlayList() {
     playlistDiv.classList.add('playlist');
 
     const title = document.createElement('h3');
-    title.textContent = `🎵 #{name}`;
+    title.textContent = `🎵 ${name}`;
 
     const genreEl = document.createElement('p');
     genreEl.textContent = `Genre: ${genre}`;
@@ -47,69 +47,50 @@ function createPlayList() {
     document.getElementById('genre').value = '';
     document.getElementById('artist').value = '';
     document.getElementById('songs').value = '';
+
+    const newPlaylist = {
+        name,
+        genre,
+        artist,
+        songs
+    };
+
+    playlists.push(newPlaylist);
+    localStorage.setItem("playlists", JSON.stringify(playlists));
 }
 
-// function addSongToPlaylist(index) {
-//     const songInput = document.getElementById(`song-input-${index}`);
-//     const songName = songInput.value.trim();
+window.addEventListener("DOMContentLoaded", () => {
+    const stored = localStorage.getItem("playlists");
+    if (stored) {
+        playlists = JSON.parse(stored);
+        playlists.forEach(pl => displayPlaylist(pl));
+    }
+});
 
-//     if (!songName) {
-//         alert("Vänligen ange en låt eller YouTube-länk.");
-//         return;
-//     }
+function displayPlaylist(playlist) {
+    const playlistContainer = document.getElementById('playlist-container');
 
-//     playlists[index].songs.push(songName);
-//     songInput.value = "";
-//     renderPlaylists();
-// }
+    const playlistDiv = document.createElement('div')
+    playlistDiv.classList.add('playlist');
 
-// function deleteSongFromPlaylist(playlistIndex, songIndex) {
-//     playlists[playlistIndex].songs.splice(songIndex, 1);
-//     renderPlaylists();
-// }
+    const title = document.createElement('h3');
+    title.textContent = `🎵 ${playlist.name}`;
 
-// function extractYouTubeID(url) {
-//     const regExp = /^.*(?:youtu.be\/|shorts\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]{11}).*/;
-//     const match = url.match(regExp);
-//     return (match && match[1]) ? match[1] : null;
-// }
+    const genreEl = document.createElement('p');
+    genreEl.textContent = `Artist: ${playlist.artist}`;
 
-// function renderPlaylists() {
-//     const container = document.getElementById("playlist-container");
-//     container.innerHTML = "<h2>Spellistor</h2>";
+    const songList = document.createElement('ul');
+    playlist.songs.forEach(song => {
+        const li = document.createElement('li');
+        li.textContent = song;
+        songList.appendChild(li);
+    });
 
-//     playlists.forEach((playlist, index) => {
-//         const playlistDiv = document.createElement("div");
-//         playlistDiv.classList.add("playlist");
+    playlistDiv.appendChild(title);
+    playlistDiv.appendChild(genreEl);
+    playlistDiv.appendChild(artistEl);
+    playlistDiv.appendChild(document.createTextNode("Låtar"));
+    playlistDiv.appendChild(songList);
 
-//         const songsHTML = playlist.songs.length > 0
-//             ? playlist.songs.map((song, songIndex) => {
-//                 const videoId = extractYouTubeID(song);
-//                 return `
-//                     <li>
-//                         ${videoId
-//                             ? `<iframe width="250" height="140" src="https://www.youtube.com/embed/${videoId}" frameborder="0" allowfullscreen></iframe>`
-//                             : song}
-//                         <button onclick="deleteSongFromPlaylist(${index}, ${songIndex})">❌</button>
-//                     </li>
-//                 `;
-//             }).join("")
-//             : "<li>Inga låtar</li>";
-
-//         playlistDiv.innerHTML = `
-//             <h3>${playlist.name}</h3>
-//             <p><strong>Genre:</strong> ${playlist.genre}</p>
-//             <p><strong>Artist:</strong> ${playlist.artist}</p>
-//             <div>
-//                 <strong>Låtar:</strong>
-//                 <ul>${songsHTML}</ul>
-//             </div>
-//             <div>
-//                 <input type="text" id="song-input-${index}" placeholder="Lägg till YouTube-länk eller låtnamn" />
-//                 <button onclick="addSongToPlaylist(${index})">Lägg till låt</button>
-//             </div>
-//         `;
-
-//         container.appendChild(playlistDiv);
-//     });
-// }
+    playlistContainer.appendChild(playlistDiv);
+}
