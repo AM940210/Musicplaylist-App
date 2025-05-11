@@ -1,10 +1,57 @@
-body {
-    font-family: Arial, sans-serif;
-    background-color: #f0f0f0;
-    padding: 20px;
+/* Google font "poopins"*/
+@import url('https://fonts.googleapis.com/css2?family=Poopins:wght@400&display=swap');
+
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
 }
 
-.container {
+body {
+    font-family: 'Poopins', sans-serif;
+    width: 100%;
+    height: 100vh;
+    background-color: #fff;
+    display: grid;
+    place-items: center;
+}
+
+header {
+    width: 85%;
+    height: 95%;
+    border: 1px solid #ddd;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+header .menu_side, 
+.songs_side {
+    width: 25%;
+    height: 90%;
+    border: 1px solid #ddd;
+    background: #111727;
+    color: #fff;
+}
+
+header .songs_side{
+    width: 75%;
+    background: #0b1320;
+}
+
+header .master_play {
+    width: 100%;
+    height: 10%;
+    border: 1px solid #ddd;
+    background: #111727;
+}
+
+header .menu_side h1 {
+    font-size: 20px;
+    margin: 15px 0px 0px 20px;
+    font-weight: 500;
+}
+
+/* .container {
     max-width: 800px;
     margin: auto;
     background: #fff;
@@ -30,4 +77,4 @@ button {
     padding: 15px;
     border-radius: 6px;
     background: #f9f9f9;
-}
+} */
