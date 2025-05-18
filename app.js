@@ -1,138 +1,113 @@
-// let playlists = [];
+2-development
+const music = new Audio();
 
-// function createPlayList() {
-//     const name = document.getElementById("playlist-name").value.trim();
-//     const genre = document.getElementById("genre").value.trim();
-//     const artist = document.getElementById("artist").value.trim();
-//     const songsInput = document.getElementById('songs').value.trim();
-//     const playlistContainer = document.getElementById('playlist-container');
+const playlists = {
+    pop: [
+        {
+            songName: "On My Way",
+            artist: "Alan Walker",
+            poster: "images/Alan-Walker.jpg",
+            src: "audio/Alan-Walker-OnMyWay.mp3"
+        }
+    ],
+    klassisk: [
+        {
+            Id: 1,
+            songName: "Bano",
+            artist: "Ahmad Zahir",
+            poster: "images/ahmad-zahir1.jpg",
+            src: "audio/Ahmad-Zahir-Bano.mp3"
+        },
+        {
+            Id: 2,
+            songName: "Ashiq shudai ay dil",
+            artist: "Ahmad Zahir",
+            poster: "images/ahmad-zahir2.jpg",
+            src: "audio/Ahmad-Zahir-Ashiq-shudai-ay-Dil.mp3"
+        }
+    ]
+};
 
-//     if (!name || !genre || !artist || !songsInput) {
-//         alert("Fyll i alla fält.");
-//         return;
-//     }
+const masterPlay = document.getElementById("masterPlay");
+const title = document.getElementById("title");
+const poster = document.getElementById("poster_master_play");
+const songList = document.getElementById("menu_song_list");
 
-//     const songs = songsInput.split(',').map(song => song.trim()).filter(song => song !== '');
+// Function för att visa spellista baserat på genre
+function loadPlaylist(genre) {
+    const songs = playlists[genre];
+    songList.innerHTML = "";
 
-//     const playlistDiv = document.createElement('div');
-//     playlistDiv.classList.add('playlist');
+    songs.forEach((song, index) => {
+        const li = document.createElement("li");
+        li.className = "songItem";
+        li.innerHTML = `
+            <span>${index + 1}</span>
+            <img src="${song.poster}" alt="">
+            <h5>${song.songName}<br><div class="subtitle">${song.artist}</div></h5>
+            <i class="bi playListPlay bi-play-circle-fill" data-genre="${genre}" data-index="${index}"></i>
+        `;
+        songList.appendChild(li);
+    });
 
-//     const title = document.createElement('h3');
-//     title.textContent = `🎵 ${name}`;
+    attachPlayListeners();
+}
 
-//     const genreEl = document.createElement('p');
-//     genreEl.textContent = `Genre: ${genre}`;
+// Function för att spela vald låt
+function attachPlayListeners() {
+    document.querySelectorAll(".playListPlay").forEach(btn => {
+        btn.addEventListener("click", () => {
+            const genre = btn.dataset.genre;
+            const index = btn.dataset.index;
+            const selectedSong = playlists[genre][index];
 
-//     const artistEl = document.createElement('p');
-//     artistEl.textContent = `Artist: ${artist}`;
+            music.src = selectedSong.src;
+            music.play();
 
+            poster.src = selectedSong.poster;
+            title.innerHTML = `${selectedSong.songName}<br><div class="subtitle">${selectedSong.artist}</div>`;
+            masterPlay.classList.remove("bi-play-fill");
+            masterPlay.classList.add("bi-pause-fill");
+        });
+    });
+}
 
-//     const songList = document.createElement('ul'); 
-//     songs.forEach(song => {
-//         const li = document.createElement('li');
-//         li.textContent = song;
-//         songList.appendChild(li);
-//     });
+// Toggle master play/pause
+masterPlay.addEventListener("click", () => {
+    if (music.paused || music.currentTime <= 0) {
+        music.play();
+        masterPlay.classList.remove("bi-play-fill");
+        masterPlay.classList.add("bi-pause-fill");
+    } else {
+        music.pause();
+        masterPlay.classList.remove("bi-pause-fill");
+        masterPlay.classList.add("bi-play-fill");
+    }
+});
 
-//     playlistDiv.appendChild(title);
-//     playlistDiv.appendChild(genreEl);
-//     playlistDiv.appendChild(artistEl);
-//     playlistDiv.appendChild(document.createTextNode("Låter"));
-//     playlistDiv.appendChild(songList);
-
-//     playlistContainer.appendChild(playlistDiv);
-
-//     // Rensa inputfälten
-//     document.getElementById('playlist-name').value = '';
-//     document.getElementById('genre').value = '';
-//     document.getElementById('artist').value = '';
-//     document.getElementById('songs').value = '';
-
-//     const newPlaylist = {
-//         name,
-//         genre,
-//         artist,
-//         songs
-//     };
-
-//     playlists.push(newPlaylist);
-//     localStorage.setItem("playlists", JSON.stringify(playlists));
-// }
+let pop_song_left = document.getElementById("pop_song_left");
+let pop_song_right = document.getElementById("pop_song_right");
+let pop_song = document.getElementsByClassName("pop_song")[0];
 
 
+pop_song_right.addEventListener("click", () =>  {
+    pop_song.scrollLeft += 330;
+})
+pop_song_left.addEventListener("click", () =>  {
+    pop_song.scrollLeft -= 330;
+})
 
-// function displayPlaylist(playlist) {
-//     const playlistContainer = document.getElementById('playlist-container');
+let pop_art_left = document.getElementById("pop_art_left");
+let pop_art_right = document.getElementById("pop_art_right");
+let item = document.getElementsByClassName("item")[0];
 
-//     const playlistDiv = document.createElement('div')
-//     playlistDiv.classList.add('playlist');
 
-//     const title = document.createElement('h3');
-//     title.textContent = `🎵 ${playlist.name}`;
+pop_art_right.addEventListener("click", () =>  {
+    item.scrollLeft += 330;
+})
+pop_art_left.addEventListener("click", () =>  {
+    item.scrollLeft -= 330;
+})
 
-//     const genreEl = document.createElement('p');
-//     genreEl.textContent = `Artist: ${playlist.genre}`;
+loadPlaylist("klassisk"); // Load default playlist
 
-//     const artistEl = document.createElement('p');
-//     artistEl.textContent = `Artist: ${playlist.artist}`;
-
-//     const songList = document.createElement('ul');
-//     playlist.songs.forEach((song, songIndex) => {
-//         const li = document.createElement('li');
-//         li.textContent = song;
-
-//         const deleteSongBtn = document.createElement('button');
-//         deleteSongBtn.textContent = '❌';
-//         deleteSongBtn.onclick = () => {
-//             deleteSongBtn(indexedDB, songIndex);
-//         };
-
-//         li.appendChild(deleteSongBtn);
-//         songList.appendChild(li);
-//     });
-
-//     const deletePlaylistBtn = document.createElement('button');
-//     deletePlaylistBtn.textContent = '🗑 Ta bort spellista';
-//     deletePlaylistBtn.onclick = () => {
-//         deletePlaylistBtn(index);
-//     };
-
-//     playlistDiv.appendChild(title);
-//     playlistDiv.appendChild(genreEl);
-//     playlistDiv.appendChild(artistEl);
-//     playlistDiv.appendChild(document.createTextNode("Låtar"));
-//     playlistDiv.appendChild(songList);
-//     playlistDiv.appendChild(deletePlaylistBtn);
-
-//     playlistContainer.appendChild(playlistDiv);
-// }
-
-// function deletePlaylist(index) {
-//     playlists.splice(index, 1);
-//     localStorage.setItem("playlists", JSON.stringify(playlists));
-//     renderAllPlaylists();
-// }
-
-// function deleteSong(playlistIndex, songIndex) {
-//     playlists[playlistIndex].songs.splice(songIndex, 1);
-//     localStorage.setItem("playlists", JSON.stringify(playlist));
-//     renderAllPlaylists();
-// }
-
-// window.addEventListener("DOMContentLoaded", () => {
-//     const stored = localStorage.getItem("playlists");
-//     if (stored) {
-//         playlists = JSON.parse(stored);
-//     }
-//     renderAllPlaylists()
-// });
-
-// function renderAllPlaylists() {
-//     const container = document.getElementById('playlist-container');
-//     container.innerHTML = "<h2>Spellistor</h2>";
-
-//     playlists.forEach((playlist), index) => {
-//         displayPlaylist(playlist, index)
-// L    }
-
-// }

@@ -104,7 +104,11 @@ header .menu_side .menu_song {
     height: 450px;
     border: 1px solid #fff;
     margin-top: 20px;
+ 2-development
+    overflow: auto;
+
     overflow-y: auto;
+ master
 }
 header .menu_side .menu_song::-webkit-scrollbar {
     display: none;
@@ -542,8 +546,13 @@ header .songs_side .popular_song .pop_song {
     overflow: auto;
     scroll-behavior: smooth;
 }
+2-development
+header .songs_side .popular_song .pop_song::-webkit-scrollbar {
+    display: none;
+
 header .songs_side .popular_song .pop_song::-webkit- {
     
+master
 }
 
 header .songs_side .popular_song .pop_song li {
@@ -639,7 +648,11 @@ header .songs_side .popular_artists .item ul {
 header .songs_side .popular_artists .item ul li {
     list-style-type: none;
     position: relative;
+2-development
+    min-width: 60px;
+
     width: 60px;
+master
     height: 60px;
     border-radius: 50%;
     margin-right: 10px;
@@ -649,4 +662,84 @@ header .songs_side .popular_artists .item ul li img {
     width: 100%;
     height: 100%;
     border-radius: 50%;
+2-development
+}
+
+@media (max-width: 768px) {
+    body {
+        display: block;
+        height: auto;
+        padding: 10px;
+    }
+
+    header {
+        width: 100%;
+        height: auto;
+        flex-direction: column;
+    }
+
+    header .menu_side,
+    header .songs_side {
+        width: 100%;
+        height: auto;
+        border: none;
+    }
+    header .menu_side {
+        order: 2; /* Visa menyn under innehållet */
+        margin-top: 20px;
+    }
+
+    header .songs_side {
+        order: 1; /* Visa innehållet först */
+        margin-top: 0;
+    }
+
+    header .master_play {
+        flex-wrap: wrap;
+        justify-content: center;
+        text-align: center;
+        height: auto;
+        padding: 10px;
+    }
+
+    header .master_play .icon {
+        margin: 10px 0;
+    }
+
+    header .master_play .bar,
+    header .master_play .vol {
+        width: 80%;
+        margin: 10px auto;
+    }
+
+    .songItem {
+        flex-wrap: wrap;
+        gap: 5px;
+        text-align: center;
+    }
+
+    .songItem img {
+        margin: auto;
+    }
+
+    header .songs_side .popular_song .pop_song,
+    header .songs_side .popular_artists .item {
+        flex-wrap: nowrap;
+        overflow-x: auto;
+    }
+
+    header .songs_side nav {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    header .songs_side nav .search {
+        width: 100%;
+    }
+
+    header .songs_side .content {
+        width: 100%;
+    }
+
+master
 }
